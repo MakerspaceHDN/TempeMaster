@@ -241,9 +241,8 @@
       statusDot.style.boxShadow = '0 0 12px #22c55e';
       statusText.innerText = 'Conectado en tiempo real';
       
-      // Suscribirse a los tópicos exactamente como están definidos en tu ESP32
-      client.subscribe('sensor/temperatura');
-      client.subscribe('sensor/humedad');
+      // Suscribirse al tópico de datos ambientales del ESP32
+      client.subscribe('sensor/datos_ambientales');
     });
 
     client.on('reconnect', () => {
@@ -264,21 +263,26 @@
 
     // Función para procesar y animar los mensajes recibidos
     client.on('message', (topic, message) => {
-      const payload = message.toString();
-      
-      if (topic === 'sensor/temperatura') {
-        tempValue.innerText = payload;
-        // Animación sutil de actualización
-        tempContainer.classList.remove('updated');
-        void tempContainer.offsetWidth; // Truco para resetear la animación
-        tempContainer.classList.add('updated');
-      } 
-      else if (topic === 'sensor/humedad') {
-        humValue.innerText = payload;
-        // Animación sutil de actualización
-        humContainer.classList.remove('updated');
-        void humContainer.offsetWidth; 
-        humContainer.classList.add('updated');
+      if (topic === 'sensor/datos_ambientales') {
+        try {
+          const data = JSON.parse(message.toString());
+          
+          if (data.temperatura !== undefined) {
+            tempValue.innerText = data.temperatura;
+            tempContainer.classList.remove('updated');
+            void tempContainer.offsetWidth;
+            tempContainer.classList.add('updated');
+          }
+          
+          if (data.humedad !== undefined) {
+            humValue.innerText = data.humedad;
+            humContainer.classList.remove('updated');
+            void humContainer.offsetWidth;
+            humContainer.classList.add('updated');
+          }
+        } catch (e) {
+          console.error('Error al parsear JSON:', e);
+        }
       }
     });
 
