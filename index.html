@@ -795,9 +795,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const config = loadConfig();
-      document.getElementById('demoMode').checked = config.demoMode;
-
       connectMQTT();
       checkTimeout = setInterval(checkTimeouts, 5000);
     });
