@@ -21,8 +21,8 @@
 5. **Importante**: Completa también los campos MQTT:
    - MQTT Server: `74726e31dc8a45ed98a0516a78fb9dbd.s1.eu.hivemq.cloud`
    - MQTT Port: `8883`
-   - MQTT User: `agrofloppy`
-   - MQTT Password: `Actuana110398.com`
+   - MQTT User: `testadmin`
+   - MQTT Password: `test123456`
 6. Clic en **Save**
 7. El ESP32 se reiniciará y conectará
 

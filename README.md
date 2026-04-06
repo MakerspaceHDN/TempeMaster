@@ -195,8 +195,8 @@ El proyecto utiliza **HiveMQ Cloud** como broker MQTT.
 | Host | `ce6bb88c4eeb4bdc8bc96560b645b95e.s1.eu.hivemq.cloud` |
 | Puerto | `8884` (WebSocket TLS) |
 | Protocolo | `wss://` (WebSocket Secure) |
-| Username | `agrofloppy` |
-| Password | `Actuana110398.com` |
+| Username | `testadmin` |
+| Password | `test123456` |
 
 ### Topics MQTT
 
@@ -350,8 +350,8 @@ Password: cajita123
 ### Credenciales MQTT
 
 ```
-Username: agrofloppy
-Password: Actuana110398.com
+Username: testadmin
+Password: test123456
 Broker: wss://ce6bb88c4eeb4bdc8bc96560b645b95e.s1.eu.hivemq.cloud:8884/mqtt
 ```
 

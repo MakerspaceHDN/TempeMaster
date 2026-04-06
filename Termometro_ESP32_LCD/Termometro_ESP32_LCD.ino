@@ -11,8 +11,8 @@ const char* password = "cajita123";
 const char* mqtt_server = "74726e31dc8a45ed98a0516a78fb9dbd.s1.eu.hivemq.cloud";
 const int mqtt_port = 8883;
 const char* mqtt_client_id = "ESP32-BOMBA-KAREN";
-const char* mqtt_user = "useradmin";
-const char* mqtt_password = "User123456";
+const char* mqtt_user = "testadmin";
+const char* mqtt_password = "test123456";
 
 const char* topic_datos = "sensor/datos_ambientales";
 const char* topic_estado = "sensor/estado";

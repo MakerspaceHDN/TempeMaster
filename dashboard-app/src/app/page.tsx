@@ -17,8 +17,8 @@ export default function Dashboard() {
     // Opciones del cliente MQTT
     const client = mqtt.connect(brokerUrl, {
       clientId: "ReactClient_" + Math.random().toString(16).substring(2, 8),
-      username: "agrofloppy",
-      password: "Actuana110398.com",
+      username: "testadmin",
+      password: "test123456",
       clean: true,
       reconnectPeriod: 2000,
       protocolVersion: 4,
