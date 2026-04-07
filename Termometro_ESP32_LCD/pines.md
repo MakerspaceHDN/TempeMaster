@@ -4,7 +4,7 @@
 | Pin ESP32 | Función | Cable LCD |
 |-----------|---------|-----------|
 | GPIO 21   | SDA     | Cable azul |
-| GPIO 22   | SCL     | Cable verde |
+| GPIO 12   | SCL     | Cable verde |
 
 ## Sensores
 | Pin ESP32 | Función | Dispositivo |

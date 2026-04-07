@@ -10,19 +10,18 @@ WiFiManager wm;
 
 const char* mqtt_server = "74726e31dc8a45ed98a0516a78fb9dbd.s1.eu.hivemq.cloud";
 const int mqtt_port = 8883;
-const char* mqtt_client_id = "ESP32-BOMBA-KAREN";
+const char* mqtt_client_id = "ESP32-CANCHA";
 const char* mqtt_user = "testadmin";
 const char* mqtt_password = "test123456";
 
-const char* topic_datos = "sensor/datos_ambientales";
-const char* topic_estado = "sensor/estado";
+const char* topic_temp = "sensor/cancha/temperatura";
+const char* topic_hum = "sensor/cancha/humedad";
 
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
 #define DHTPIN 4
 #define DHTTYPE DHT22
-#define WIFIBUTTON 0
 
 DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -56,8 +55,8 @@ void setup() {
     lcd.clear();
     lcd.print("Portal WiFi...");
     lcd.setCursor(0, 1);
-    lcd.print("ESP32-Termometro");
-    wm.startConfigPortal("ESP32-Termometro");
+    lcd.print("ESP32-CANCHA");
+    wm.startConfigPortal("ESP32-CANCHA");
   }
   
   Serial.println("\nWiFi OK!");
@@ -71,13 +70,6 @@ void setup() {
   client.setServer(mqtt_server, mqtt_port);
   
   Serial.println("Conectando a HiveMQ...");
-  Serial.print("Server: ");
-  Serial.println(mqtt_server);
-  Serial.print("Port: ");
-  Serial.println(mqtt_port);
-  Serial.print("User: ");
-  Serial.println(mqtt_user);
-  
   lcd.clear();
   lcd.print("MQTT...");
   
@@ -98,19 +90,10 @@ void setup() {
   
   dht.begin();
   lcd.clear();
-  lcd.print("Sistema listo");
+  lcd.print("Cancha lista");
 }
 
 void loop() {
-  if(digitalRead(WIFIBUTTON) == LOW) {
-    lcd.clear();
-    lcd.print("Config WiFi...");
-    delay(200);
-    wm.startConfigPortal("ESP32-Termometro");
-    lcd.clear();
-    lcd.print("WiFi reconectado");
-    delay(1000);
-  }
   if (!client.connected()) {
     Serial.println("Reconectando MQTT...");
     if (client.connect(mqtt_client_id, mqtt_user, mqtt_password)) {
@@ -132,7 +115,6 @@ void loop() {
   lcd.setCursor(0, 0);
   lcd.print("Temp:");
   lcd.print(temperatura, 1);
-
   lcd.print((char)223);
   lcd.print("C");
   
@@ -142,11 +124,10 @@ void loop() {
   lcd.print("%");
 
   if (client.connected()) {
-    String jsonPayload = "{\"temperatura\":" + String(temperatura, 1) + 
-                         ",\"humedad\":" + String(humedad, 1) + "}";
-    client.publish(topic_datos, jsonPayload.c_str());
-    Serial.println("Enviado: " + jsonPayload);
+    client.publish(topic_temp, String(temperatura, 1).c_str());
+    client.publish(topic_hum, String(humedad, 1).c_str());
+    Serial.println("Enviado - Temp: " + String(temperatura, 1) + " Hum: " + String(humedad, 1));
   }
 
-  delay(2000);
+  delay(5000);
 }
